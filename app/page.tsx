@@ -3003,6 +3003,7 @@ function OnboardingFlow({ onDone }: { onDone: (liked: Set<string>) => void }) {
   const [step, setStep] = useState(0);
   const [selCats, setSelCats] = useState<string[]>([]);
   const [selPlaces, setSelPlaces] = useState<Set<string>>(new Set());
+  const [venueIdx, setVenueIdx] = useState<number | null>(null);
 
   const toggleCat = (id: string) => {
     setSelCats(prev =>
@@ -3085,6 +3086,18 @@ function OnboardingFlow({ onDone }: { onDone: (liked: Set<string>) => void }) {
     </div>
   );
 
+  // ── Venue detail opened from onboarding ───────────────────────────────────
+  if (step === 1 && venueIdx !== null) {
+    const placeName = PLACES[venueIdx]?.name ?? '';
+    return (
+      <VenueScreen
+        onBack={() => setVenueIdx(null)}
+        placeIdx={venueIdx}
+        likedSlot={{ isLiked: selPlaces.has(placeName), toggle: () => togglePlace(placeName) }}
+      />
+    );
+  }
+
   // ── Screen 2: place pick ───────────────────────────────────────────────────
   if (step === 1) {
     const groups = selCats
@@ -3093,59 +3106,64 @@ function OnboardingFlow({ onDone }: { onDone: (liked: Set<string>) => void }) {
       .filter(g => g.places.length > 0);
 
     return (
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', backgroundColor: '#FAFAFA', overflow: 'hidden' }}>
-        <div style={{ padding: '32px 20px 0', flexShrink: 0 }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', backgroundColor: '#F2F2F2', overflow: 'hidden' }}>
+        <div style={{ padding: '32px 16px 0', flexShrink: 0, backgroundColor: '#F2F2F2' }}>
           <ProgressDots />
-          <h2 style={{ margin: '0 0 6px', fontSize: 22, fontWeight: 800, color: '#1A1A1A' }}>
+          <h2 style={{ margin: '0 0 4px', fontSize: 22, fontWeight: 800, color: '#1A1A1A' }}>
             Отметьте, что цепляет
           </h2>
-          <p style={{ margin: '0 0 20px', fontSize: 13, color: '#999' }}>
-            Выберите места, которые нравятся
+          <p style={{ margin: '0 0 16px', fontSize: 13, color: '#999' }}>
+            Листайте фото, заходите внутрь
           </p>
         </div>
-        <div style={{ flex: 1, overflowY: 'auto', padding: '0 20px 16px' }}>
+        <div style={{ flex: 1, overflowY: 'auto', padding: '0 16px 16px' }}>
           {groups.map(({ cat, places }) => (
-            <div key={cat.id} style={{ marginBottom: 20 }}>
-              <p style={{ margin: '0 0 10px', fontSize: 11, fontWeight: 700, color: '#AAAAAA', textTransform: 'uppercase', letterSpacing: 0.8 }}>
+            <div key={cat.id} style={{ marginBottom: 24 }}>
+              <p style={{ margin: '12px 0 10px', fontSize: 11, fontWeight: 700, color: '#AAAAAA', textTransform: 'uppercase', letterSpacing: 0.8 }}>
                 {cat.emoji} {cat.label}
               </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                 {places.map(p => {
                   const sel = selPlaces.has(p.name);
+                  const idx = PLACES.indexOf(p);
                   return (
-                    <button key={p.name} onClick={() => togglePlace(p.name)} style={{
-                      display: 'flex', alignItems: 'center', gap: 12,
-                      backgroundColor: sel ? ACCENT + '22' : '#FFF',
-                      border: sel ? `1.5px solid ${ACCENT_DARK}` : '1.5px solid #EFEFEF',
-                      borderRadius: 16, padding: '10px 12px',
-                      cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left',
-                      transition: 'all 0.15s',
-                    }}>
-                      <img src={p.img} alt={p.name} style={{ width: 52, height: 52, borderRadius: 12, objectFit: 'cover', flexShrink: 0 }} />
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <p style={{ margin: '0 0 2px', fontSize: 13, fontWeight: 700, color: '#1A1A1A' }}>{p.name}</p>
-                        <p style={{ margin: 0, fontSize: 11, color: '#999' }}>{p.sub} · {p.km}</p>
-                      </div>
-                      <div style={{
-                        width: 24, height: 24, borderRadius: 12, flexShrink: 0,
-                        backgroundColor: sel ? ACCENT_DARK : '#F0F0F0',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        transition: 'all 0.15s',
-                      }}>
-                        {sel && (
-                          <svg width="10" height="8" viewBox="0 0 12 9" fill="none">
-                            <path d="M1 4L4.5 7.5L11 1" stroke="#FFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <div key={p.name} style={{ position: 'relative' }}>
+                      <LargeVerticalCard
+                        place={p}
+                        onClick={() => setVenueIdx(idx)}
+                      />
+                      {/* Selection toggle overlay */}
+                      <button
+                        onClick={e => { e.stopPropagation(); togglePlace(p.name); }}
+                        style={{
+                          position: 'absolute', top: 12, right: 12,
+                          width: 32, height: 32, borderRadius: 16,
+                          backgroundColor: sel ? ACCENT_DARK : 'rgba(255,255,255,0.88)',
+                          border: sel ? 'none' : '2px solid rgba(255,255,255,0.7)',
+                          boxShadow: '0 1px 6px rgba(0,0,0,0.18)',
+                          cursor: 'pointer', padding: 0,
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          transition: 'all 0.15s',
+                        }}
+                      >
+                        {sel ? (
+                          <svg width="12" height="10" viewBox="0 0 12 9" fill="none">
+                            <path d="M1 4L4.5 7.5L11 1" stroke="#FFF" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        ) : (
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 5v14M5 12h14" stroke="#999" strokeWidth="2" strokeLinecap="round"/>
                           </svg>
                         )}
-                      </div>
-                    </button>
+                      </button>
+                    </div>
                   );
                 })}
               </div>
             </div>
           ))}
         </div>
-        <div style={{ padding: '0 20px 24px', flexShrink: 0 }}>
+        <div style={{ padding: '0 16px 24px', flexShrink: 0, backgroundColor: '#F2F2F2' }}>
           <button onClick={() => setStep(2)} style={{
             width: '100%', padding: '15px', borderRadius: 20, border: 'none', cursor: 'pointer',
             backgroundColor: ACCENT_DARK, color: '#FFF',
