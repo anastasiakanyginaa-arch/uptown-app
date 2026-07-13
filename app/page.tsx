@@ -2731,9 +2731,9 @@ function CollectionDetailScreen({ collectionIdx, onBack, onVenueClick, onMapClic
     cat === 'spa' ? 'SPA' : cat === 'bars' ? 'Бар' : cat === 'food' ? 'Еда' : cat === 'clubs' ? 'Клуб' : cat === 'art' ? 'Арт' : 'Спорт';
 
   return (
-    <div style={{ flex: 1, overflowY: 'auto', backgroundColor: '#F5F5F5' }}>
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', backgroundColor: '#F5F5F5' }}>
       {/* Header */}
-      <div style={{ position: 'sticky', top: 0, zIndex: 10, backgroundColor: '#FFF', padding: '14px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #F0F0F0' }}>
+      <div style={{ position: 'sticky', top: 0, zIndex: 10, backgroundColor: '#FFF', padding: '14px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #F0F0F0', flexShrink: 0 }}>
         <button onClick={onBack} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
           <svg width="10" height="18" viewBox="0 0 10 18" fill="none">
             <path d="M9 1L1 9L9 17" stroke="#1A1A1A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -2741,12 +2741,14 @@ function CollectionDetailScreen({ collectionIdx, onBack, onVenueClick, onMapClic
         </button>
         <span style={{ fontSize: 16, fontWeight: 700, color: '#1A1A1A' }}>{col.title}</span>
         <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-          {/* Map icon */}
-          <button onClick={onMapClick} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4 }}>
+          {/* Share */}
+          <button onClick={() => navigator.share?.({ title: col.title, text: col.desc }).catch(() => {})} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4 }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path d="M9 3L3 6V21L9 18L15 21L21 18V3L15 6L9 3Z" stroke="#555" strokeWidth="1.8" strokeLinejoin="round"/>
-              <line x1="9" y1="3" x2="9" y2="18" stroke="#555" strokeWidth="1.8"/>
-              <line x1="15" y1="6" x2="15" y2="21" stroke="#555" strokeWidth="1.8"/>
+              <circle cx="18" cy="5" r="2.5" stroke="#555" strokeWidth="1.8"/>
+              <circle cx="18" cy="19" r="2.5" stroke="#555" strokeWidth="1.8"/>
+              <circle cx="6" cy="12" r="2.5" stroke="#555" strokeWidth="1.8"/>
+              <line x1="8.3" y1="10.8" x2="15.7" y2="6.2" stroke="#555" strokeWidth="1.8" strokeLinecap="round"/>
+              <line x1="8.3" y1="13.2" x2="15.7" y2="17.8" stroke="#555" strokeWidth="1.8" strokeLinecap="round"/>
             </svg>
           </button>
           {/* Save collection bookmark */}
@@ -2762,12 +2764,12 @@ function CollectionDetailScreen({ collectionIdx, onBack, onVenueClick, onMapClic
       </div>
 
       {/* Count subheader */}
-      <div style={{ position: 'sticky', top: 49, zIndex: 9, backgroundColor: '#FFF', padding: '10px 16px 12px', borderBottom: '1px solid #F0F0F0' }}>
+      <div style={{ backgroundColor: '#FFF', padding: '10px 16px 12px', borderBottom: '1px solid #F0F0F0', flexShrink: 0 }}>
         <span style={{ fontSize: 13, color: '#999' }}>{places.length} мест · {col.desc}</span>
       </div>
 
       {/* Places list — large vertical cards with photo slider */}
-      <div style={{ padding: '14px 16px 24px', display: 'flex', flexDirection: 'column', gap: 14 }}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '14px 16px 14px', display: 'flex', flexDirection: 'column', gap: 14 }}>
         {places.map((v, i) => {
           const isSaved = savedPlaces.has(v.name);
           return (
@@ -2776,6 +2778,23 @@ function CollectionDetailScreen({ collectionIdx, onBack, onVenueClick, onMapClic
           );
         })}
         <div style={{ height: 8 }} />
+      </div>
+
+      {/* Bottom CTA — show on map */}
+      <div style={{ flexShrink: 0, padding: '12px 16px 28px', backgroundColor: '#FFF', borderTop: '1px solid #F0F0F0' }}>
+        <button onClick={onMapClick} style={{
+          width: '100%', padding: '15px', borderRadius: 20, border: 'none', cursor: 'pointer',
+          backgroundColor: ACCENT_DARK, color: '#FFF',
+          fontSize: 15, fontWeight: 700, fontFamily: 'inherit',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+        }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M9 3L3 6V21L9 18L15 21L21 18V3L15 6L9 3Z" stroke="#FFF" strokeWidth="2" strokeLinejoin="round"/>
+            <line x1="9" y1="3" x2="9" y2="18" stroke="#FFF" strokeWidth="2"/>
+            <line x1="15" y1="6" x2="15" y2="21" stroke="#FFF" strokeWidth="2"/>
+          </svg>
+          Показать на карте
+        </button>
       </div>
     </div>
   );
