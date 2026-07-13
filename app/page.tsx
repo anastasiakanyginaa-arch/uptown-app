@@ -2779,7 +2779,7 @@ function CollectionDetailScreen({ collectionIdx, onBack, onVenueClick, onMapClic
       </div>
 
       {/* Bottom CTA — sticky at bottom of scroll */}
-      <div style={{ position: 'sticky', bottom: 0, zIndex: 8, padding: '10px 16px 20px', backgroundColor: '#FFF', borderTop: '1px solid #F0F0F0', display: 'flex', justifyContent: 'center' }}>
+      <div style={{ position: 'sticky', bottom: 0, zIndex: 8, padding: '10px 16px 20px', display: 'flex', justifyContent: 'center' }}>
         <button onClick={onMapClick} style={{
           padding: '7px 16px', borderRadius: 20, border: 'none', cursor: 'pointer',
           backgroundColor: ACCENT + '55',
