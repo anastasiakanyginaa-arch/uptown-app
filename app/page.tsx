@@ -2991,13 +2991,12 @@ function ProfileScreen() {
 // ─── Onboarding ───────────────────────────────────────────────────────────────
 
 const ONBOARDING_CATS = [
-  { id: 'spa',    label: 'SPA',         emoji: '🧘' },
-  { id: 'bars',   label: 'Бары',        emoji: '🍸' },
-  { id: 'food',   label: 'Еда',         emoji: '🍽️' },
-  { id: 'clubs',  label: 'Клубы',       emoji: '🎉' },
-  { id: 'art',    label: 'Арт',         emoji: '🎨' },
-  { id: 'sport',  label: 'Спорт',       emoji: '🏃' },
-  { id: 'events', label: 'События',     emoji: '📅' },
+  { id: 'spa',    label: 'SPA',    emoji: '🧘' },
+  { id: 'bars',   label: 'Бары',   emoji: '🍸' },
+  { id: 'food',   label: 'Еда',    emoji: '🍽️' },
+  { id: 'clubs',  label: 'Клубы',  emoji: '🎉' },
+  { id: 'art',    label: 'Арт',    emoji: '🎨' },
+  { id: 'sport',  label: 'Спорт',  emoji: '🏃' },
 ];
 
 function OnboardingFlow({ onDone }: { onDone: (liked: Set<string>) => void }) {
