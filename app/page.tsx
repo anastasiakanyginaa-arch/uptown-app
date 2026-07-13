@@ -2731,9 +2731,9 @@ function CollectionDetailScreen({ collectionIdx, onBack, onVenueClick, onMapClic
     cat === 'spa' ? 'SPA' : cat === 'bars' ? 'Бар' : cat === 'food' ? 'Еда' : cat === 'clubs' ? 'Клуб' : cat === 'art' ? 'Арт' : 'Спорт';
 
   return (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', backgroundColor: '#F5F5F5' }}>
+    <div style={{ flex: 1, overflowY: 'auto', backgroundColor: '#F5F5F5' }}>
       {/* Header */}
-      <div style={{ position: 'sticky', top: 0, zIndex: 10, backgroundColor: '#FFF', padding: '14px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #F0F0F0', flexShrink: 0 }}>
+      <div style={{ position: 'sticky', top: 0, zIndex: 10, backgroundColor: '#FFF', padding: '14px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #F0F0F0' }}>
         <button onClick={onBack} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
           <svg width="10" height="18" viewBox="0 0 10 18" fill="none">
             <path d="M9 1L1 9L9 17" stroke="#1A1A1A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -2761,24 +2761,25 @@ function CollectionDetailScreen({ collectionIdx, onBack, onVenueClick, onMapClic
       </div>
 
       {/* Count subheader */}
-      <div style={{ backgroundColor: '#FFF', padding: '10px 16px 12px', borderBottom: '1px solid #F0F0F0', flexShrink: 0 }}>
+      <div style={{ position: 'sticky', top: 49, zIndex: 9, backgroundColor: '#FFF', padding: '10px 16px 12px', borderBottom: '1px solid #F0F0F0' }}>
         <span style={{ fontSize: 13, color: '#999' }}>{places.length} мест · {col.desc}</span>
       </div>
 
-      {/* Places list — large vertical cards with photo slider */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '14px 16px 14px', display: 'flex', flexDirection: 'column', gap: 14 }}>
+      {/* Places list */}
+      <div style={{ padding: '14px 16px 0' }}>
         {places.map((v, i) => {
           const isSaved = savedPlaces.has(v.name);
           return (
-            <LargeVerticalCard key={i} place={v} onClick={() => onVenueClick(PLACES.indexOf(v))}
-              savedSlot={{ isSaved, toggle: () => togglePlace(v.name) }} />
+            <div key={i} style={{ marginBottom: 14 }}>
+              <LargeVerticalCard place={v} onClick={() => onVenueClick(PLACES.indexOf(v))}
+                savedSlot={{ isSaved, toggle: () => togglePlace(v.name) }} />
+            </div>
           );
         })}
-        <div style={{ height: 8 }} />
       </div>
 
-      {/* Bottom CTA — show on map */}
-      <div style={{ flexShrink: 0, padding: '10px 16px 20px', backgroundColor: '#FFF', borderTop: '1px solid #F0F0F0', display: 'flex', justifyContent: 'center' }}>
+      {/* Bottom CTA — sticky at bottom of scroll */}
+      <div style={{ position: 'sticky', bottom: 0, zIndex: 8, padding: '10px 16px 20px', backgroundColor: '#FFF', borderTop: '1px solid #F0F0F0', display: 'flex', justifyContent: 'center' }}>
         <button onClick={onMapClick} style={{
           padding: '7px 16px', borderRadius: 20, border: 'none', cursor: 'pointer',
           backgroundColor: ACCENT + '55',
