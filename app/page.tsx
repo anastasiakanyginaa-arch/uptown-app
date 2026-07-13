@@ -2782,7 +2782,7 @@ function CollectionDetailScreen({ collectionIdx, onBack, onVenueClick, onMapClic
       <div style={{ position: 'sticky', bottom: 0, zIndex: 8, padding: '10px 16px 20px', display: 'flex', justifyContent: 'center' }}>
         <button onClick={onMapClick} style={{
           padding: '7px 16px', borderRadius: 20, border: 'none', cursor: 'pointer',
-          backgroundColor: ACCENT + '55',
+          backgroundColor: ACCENT,
           color: ACCENT_DARK,
           fontSize: 12, fontWeight: 600, fontFamily: 'inherit',
           display: 'flex', alignItems: 'center', gap: 6,
