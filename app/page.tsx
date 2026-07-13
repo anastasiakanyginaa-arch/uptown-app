@@ -2778,17 +2778,18 @@ function CollectionDetailScreen({ collectionIdx, onBack, onVenueClick, onMapClic
       </div>
 
       {/* Bottom CTA — show on map */}
-      <div style={{ flexShrink: 0, padding: '12px 16px 28px', backgroundColor: '#FFF', borderTop: '1px solid #F0F0F0' }}>
+      <div style={{ flexShrink: 0, padding: '10px 16px 20px', backgroundColor: '#FFF', borderTop: '1px solid #F0F0F0', display: 'flex', justifyContent: 'center' }}>
         <button onClick={onMapClick} style={{
-          width: '100%', padding: '15px', borderRadius: 20, border: 'none', cursor: 'pointer',
-          backgroundColor: ACCENT_DARK, color: '#FFF',
-          fontSize: 15, fontWeight: 700, fontFamily: 'inherit',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+          padding: '7px 16px', borderRadius: 20, border: 'none', cursor: 'pointer',
+          backgroundColor: ACCENT + '55',
+          color: ACCENT_DARK,
+          fontSize: 12, fontWeight: 600, fontFamily: 'inherit',
+          display: 'flex', alignItems: 'center', gap: 6,
         }}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-            <path d="M9 3L3 6V21L9 18L15 21L21 18V3L15 6L9 3Z" stroke="#FFF" strokeWidth="2" strokeLinejoin="round"/>
-            <line x1="9" y1="3" x2="9" y2="18" stroke="#FFF" strokeWidth="2"/>
-            <line x1="15" y1="6" x2="15" y2="21" stroke="#FFF" strokeWidth="2"/>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+            <path d="M9 3L3 6V21L9 18L15 21L21 18V3L15 6L9 3Z" stroke={ACCENT_DARK} strokeWidth="2" strokeLinejoin="round"/>
+            <line x1="9" y1="3" x2="9" y2="18" stroke={ACCENT_DARK} strokeWidth="2"/>
+            <line x1="15" y1="6" x2="15" y2="21" stroke={ACCENT_DARK} strokeWidth="2"/>
           </svg>
           Показать на карте
         </button>
