@@ -2988,6 +2988,207 @@ function ProfileScreen() {
   );
 }
 
+// ─── Onboarding ───────────────────────────────────────────────────────────────
+
+const ONBOARDING_CATS = [
+  { id: 'spa',    label: 'SPA',         emoji: '🧘' },
+  { id: 'bars',   label: 'Бары',        emoji: '🍸' },
+  { id: 'food',   label: 'Еда',         emoji: '🍽️' },
+  { id: 'clubs',  label: 'Клубы',       emoji: '🎉' },
+  { id: 'art',    label: 'Арт',         emoji: '🎨' },
+  { id: 'sport',  label: 'Спорт',       emoji: '🏃' },
+  { id: 'events', label: 'События',     emoji: '📅' },
+];
+
+function OnboardingFlow({ onDone }: { onDone: (liked: Set<string>) => void }) {
+  const [step, setStep] = useState(0);
+  const [selCats, setSelCats] = useState<string[]>([]);
+  const [selPlaces, setSelPlaces] = useState<Set<string>>(new Set());
+
+  const toggleCat = (id: string) => {
+    setSelCats(prev =>
+      prev.includes(id) ? prev.filter(x => x !== id)
+        : prev.length < 3 ? [...prev, id] : prev
+    );
+  };
+
+  const togglePlace = (name: string) => {
+    setSelPlaces(prev => {
+      const n = new Set(prev);
+      n.has(name) ? n.delete(name) : n.add(name);
+      return n;
+    });
+  };
+
+  const placesForCat = (catId: string) =>
+    catId === 'events'
+      ? []
+      : PLACES.filter(p => p.category === catId).slice(0, 4);
+
+  const ProgressDots = () => (
+    <div style={{ display: 'flex', gap: 6, justifyContent: 'center', marginBottom: 28 }}>
+      {[0, 1, 2].map(i => (
+        <div key={i} style={{
+          width: i === step ? 20 : 7, height: 7, borderRadius: 4,
+          backgroundColor: i <= step ? ACCENT_DARK : '#E0E0E0',
+          transition: 'all 0.3s ease',
+        }} />
+      ))}
+    </div>
+  );
+
+  // ── Screen 1: category pick ────────────────────────────────────────────────
+  if (step === 0) return (
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '32px 20px 24px', backgroundColor: '#FAFAFA' }}>
+      <ProgressDots />
+      <h2 style={{ margin: '0 0 6px', fontSize: 22, fontWeight: 800, color: '#1A1A1A', lineHeight: 1.2 }}>
+        Что вам интересно?
+      </h2>
+      <p style={{ margin: '0 0 24px', fontSize: 13, color: '#999', lineHeight: 1.5 }}>
+        Выберите до 3 категорий — подберём лучшие места
+      </p>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, flex: 1 }}>
+        {ONBOARDING_CATS.map(c => {
+          const active = selCats.includes(c.id);
+          const disabled = !active && selCats.length >= 3;
+          return (
+            <button key={c.id} onClick={() => toggleCat(c.id)} style={{
+              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+              gap: 8, padding: '20px 12px',
+              backgroundColor: active ? ACCENT : '#FFF',
+              border: active ? `2px solid ${ACCENT_DARK}` : '2px solid #EFEFEF',
+              borderRadius: 20, cursor: disabled ? 'default' : 'pointer',
+              opacity: disabled ? 0.4 : 1,
+              transition: 'all 0.15s ease',
+              fontFamily: 'inherit',
+            }}>
+              <span style={{ fontSize: 28 }}>{c.emoji}</span>
+              <span style={{ fontSize: 13, fontWeight: 700, color: active ? ACCENT_DARK : '#1A1A1A' }}>{c.label}</span>
+              {active && (
+                <div style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: ACCENT_DARK, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="10" height="8" viewBox="0 0 12 9" fill="none">
+                    <path d="M1 4L4.5 7.5L11 1" stroke="#FFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              )}
+            </button>
+          );
+        })}
+      </div>
+      <button onClick={() => setStep(1)} disabled={selCats.length === 0} style={{
+        marginTop: 20, padding: '15px', borderRadius: 20, border: 'none', cursor: selCats.length ? 'pointer' : 'default',
+        backgroundColor: selCats.length ? ACCENT_DARK : '#E0E0E0',
+        color: selCats.length ? '#FFF' : '#AAA',
+        fontSize: 15, fontWeight: 700, fontFamily: 'inherit', transition: 'all 0.2s',
+      }}>
+        Далее →
+      </button>
+    </div>
+  );
+
+  // ── Screen 2: place pick ───────────────────────────────────────────────────
+  if (step === 1) {
+    const groups = selCats
+      .filter(c => c !== 'events')
+      .map(c => ({ cat: ONBOARDING_CATS.find(x => x.id === c)!, places: placesForCat(c) }))
+      .filter(g => g.places.length > 0);
+
+    return (
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', backgroundColor: '#FAFAFA', overflow: 'hidden' }}>
+        <div style={{ padding: '32px 20px 0', flexShrink: 0 }}>
+          <ProgressDots />
+          <h2 style={{ margin: '0 0 6px', fontSize: 22, fontWeight: 800, color: '#1A1A1A' }}>
+            Отметьте, что цепляет
+          </h2>
+          <p style={{ margin: '0 0 20px', fontSize: 13, color: '#999' }}>
+            Выберите места, которые нравятся
+          </p>
+        </div>
+        <div style={{ flex: 1, overflowY: 'auto', padding: '0 20px 16px' }}>
+          {groups.map(({ cat, places }) => (
+            <div key={cat.id} style={{ marginBottom: 20 }}>
+              <p style={{ margin: '0 0 10px', fontSize: 11, fontWeight: 700, color: '#AAAAAA', textTransform: 'uppercase', letterSpacing: 0.8 }}>
+                {cat.emoji} {cat.label}
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {places.map(p => {
+                  const sel = selPlaces.has(p.name);
+                  return (
+                    <button key={p.name} onClick={() => togglePlace(p.name)} style={{
+                      display: 'flex', alignItems: 'center', gap: 12,
+                      backgroundColor: sel ? ACCENT + '22' : '#FFF',
+                      border: sel ? `1.5px solid ${ACCENT_DARK}` : '1.5px solid #EFEFEF',
+                      borderRadius: 16, padding: '10px 12px',
+                      cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left',
+                      transition: 'all 0.15s',
+                    }}>
+                      <img src={p.img} alt={p.name} style={{ width: 52, height: 52, borderRadius: 12, objectFit: 'cover', flexShrink: 0 }} />
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <p style={{ margin: '0 0 2px', fontSize: 13, fontWeight: 700, color: '#1A1A1A' }}>{p.name}</p>
+                        <p style={{ margin: 0, fontSize: 11, color: '#999' }}>{p.sub} · {p.km}</p>
+                      </div>
+                      <div style={{
+                        width: 24, height: 24, borderRadius: 12, flexShrink: 0,
+                        backgroundColor: sel ? ACCENT_DARK : '#F0F0F0',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        transition: 'all 0.15s',
+                      }}>
+                        {sel && (
+                          <svg width="10" height="8" viewBox="0 0 12 9" fill="none">
+                            <path d="M1 4L4.5 7.5L11 1" stroke="#FFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        )}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div style={{ padding: '0 20px 24px', flexShrink: 0 }}>
+          <button onClick={() => setStep(2)} style={{
+            width: '100%', padding: '15px', borderRadius: 20, border: 'none', cursor: 'pointer',
+            backgroundColor: ACCENT_DARK, color: '#FFF',
+            fontSize: 15, fontWeight: 700, fontFamily: 'inherit',
+          }}>
+            {selPlaces.size > 0 ? `Готово (${selPlaces.size}) →` : 'Пропустить →'}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // ── Screen 3: tip ─────────────────────────────────────────────────────────
+  return (
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '32px 28px 40px', backgroundColor: '#FAFAFA' }}>
+      <ProgressDots />
+      <div style={{
+        width: 80, height: 80, borderRadius: 40, backgroundColor: ACCENT,
+        display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 24,
+      }}>
+        <svg width="36" height="34" viewBox="0 0 24 22" fill="none">
+          <path d="M12 21C12 21 2 14 2 7a5 5 0 0110 0 5 5 0 0110 0c0 7-10 14-10 14z"
+            fill={ACCENT_DARK} stroke={ACCENT_DARK} strokeWidth="1.5" strokeLinejoin="round"/>
+        </svg>
+      </div>
+      <h2 style={{ margin: '0 0 12px', fontSize: 22, fontWeight: 800, color: '#1A1A1A', textAlign: 'center', lineHeight: 1.25 }}>
+        Рекомендации станут точнее
+      </h2>
+      <p style={{ margin: '0 0 40px', fontSize: 14, color: '#777', textAlign: 'center', lineHeight: 1.6 }}>
+        Сохраняйте места в избранное — мы учтём всё, что вам нравится, и подберём ещё лучше
+      </p>
+      <button onClick={() => onDone(selPlaces)} style={{
+        width: '100%', padding: '15px', borderRadius: 20, border: 'none', cursor: 'pointer',
+        backgroundColor: ACCENT_DARK, color: '#FFF',
+        fontSize: 15, fontWeight: 700, fontFamily: 'inherit',
+      }}>
+        Начать →
+      </button>
+    </div>
+  );
+}
+
 // ─── Root Component ───────────────────────────────────────────────────────────
 
 export default function UptownApp() {
@@ -3002,7 +3203,8 @@ export default function UptownApp() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchResult, setSearchResult] = useState<{ label: string; places: typeof PLACES } | null>(null);
-  const [likedSet, setLikedSet] = useState<Set<string>>(() => new Set(['Nori', 'Atelier SPA']));
+  const [onboardingDone, setOnboardingDone] = useState(false);
+  const [likedSet, setLikedSet] = useState<Set<string>>(new Set());
   const toggleLike = (name: string) => setLikedSet(prev => {
     const next = new Set(prev);
     next.has(name) ? next.delete(name) : next.add(name);
@@ -3082,8 +3284,13 @@ export default function UptownApp() {
           {/* Status bar */}
           <StatusBar />
 
+          {/* Onboarding */}
+          {!onboardingDone && (
+            <OnboardingFlow onDone={(liked) => { setLikedSet(liked); setOnboardingDone(true); }} />
+          )}
+
           {/* Screen content */}
-          <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ flex: 1, overflow: 'hidden', flexDirection: 'column', display: onboardingDone ? 'flex' : 'none' }}>
             {screen === 'events' && (
               <EventsScreen
                 selectedCategories={selectedCategories}
@@ -3160,7 +3367,7 @@ export default function UptownApp() {
           </div>
 
           {/* Bottom tab bar */}
-          <BottomTabBar activeTab={activeTab} onTabChange={handleTabChange} />
+          {onboardingDone && <BottomTabBar activeTab={activeTab} onTabChange={handleTabChange} />}
         </div>
       </div>
     </>
