@@ -1441,7 +1441,7 @@ function HomeScreen({ onVenueClick, onAllCollections, onCollectionClick, onAllNe
           {/* Gradient overlay */}
           <div style={{
             position: 'absolute', inset: 0,
-            background: 'linear-gradient(135deg, rgba(20,20,20,0.72) 0%, rgba(20,20,20,0.38) 60%, rgba(20,20,20,0.15) 100%)',
+            background: 'linear-gradient(to top, rgba(20,20,20,0.75) 0%, rgba(20,20,20,0.35) 50%, rgba(20,20,20,0.0) 100%)',
           }} />
           {/* Label pill */}
           <div style={{
