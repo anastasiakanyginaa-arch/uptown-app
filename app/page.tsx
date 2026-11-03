@@ -1463,14 +1463,6 @@ function HomeScreen({ onVenueClick, onAllCollections, onCollectionClick, onAllNe
               Ужины, бранчи и другие события от UPTOWN,<br/>на которых находят новых друзей
             </p>
           </div>
-          {/* Arrow */}
-          <div style={{ position: 'absolute', bottom: 20, right: 18 }}>
-            <div style={{ width: 32, height: 32, borderRadius: 16, backgroundColor: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                <path d="M5 12h14M13 6l6 6-6 6" stroke="#FFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
-          </div>
         </div>
       )}
 
