@@ -1434,7 +1434,7 @@ function HomeScreen({ onVenueClick, onAllCollections, onCollectionClick, onAllNe
         <div style={{ margin: '8px 16px 0', borderRadius: 20, overflow: 'hidden', position: 'relative', height: 180, cursor: 'pointer' }}
           onClick={() => onTabChange?.('dinners')}>
           <img
-            src="https://picsum.photos/seed/dinner-social/800/360"
+            src="/dinners-banner.png"
             alt="Встречи"
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
           />
