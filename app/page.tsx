@@ -1255,7 +1255,7 @@ function mockAiSearch(query: string): { label: string; places: typeof PLACES } {
 
 function HomeScreen({ onVenueClick, onAllCollections, onCollectionClick, onAllNearby, onAllWeekly, onAllFeatured,
   searchDraft, setSearchDraft, searchQuery, setSearchQuery, searchLoading, setSearchLoading, searchResult, setSearchResult,
-  likedSet, toggleLike,
+  likedSet, toggleLike, onTabChange,
 }: {
   onVenueClick: (idx: number) => void;
   onAllCollections: () => void;
@@ -1270,6 +1270,7 @@ function HomeScreen({ onVenueClick, onAllCollections, onCollectionClick, onAllNe
   setSearchResult: (v: { label: string; places: typeof PLACES } | null) => void;
   likedSet: Set<string>;
   toggleLike: (name: string) => void;
+  onTabChange?: (tab: Tab) => void;
 }) {
   const [activeCat, setActiveCat] = useState('all');
   const [searchCat, setSearchCat] = useState('all');
@@ -1427,6 +1428,51 @@ function HomeScreen({ onVenueClick, onAllCollections, onCollectionClick, onAllNe
           </div>
         )}
       </div>
+
+      {/* ── Встречи баннер ── */}
+      {!searchResult && !searchLoading && (
+        <div style={{ margin: '8px 16px 0', borderRadius: 20, overflow: 'hidden', position: 'relative', height: 180, cursor: 'pointer' }}
+          onClick={() => onTabChange?.('dinners')}>
+          <img
+            src="https://picsum.photos/seed/dinner-social/800/360"
+            alt="Встречи"
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
+          {/* Gradient overlay */}
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: 'linear-gradient(135deg, rgba(20,20,20,0.72) 0%, rgba(20,20,20,0.38) 60%, rgba(20,20,20,0.15) 100%)',
+          }} />
+          {/* Label pill */}
+          <div style={{
+            position: 'absolute', top: 16, left: 16,
+            backgroundColor: ACCENT,
+            color: ACCENT_DARK,
+            fontSize: 10, fontWeight: 800, letterSpacing: 0.8,
+            padding: '4px 10px', borderRadius: 20,
+            textTransform: 'uppercase',
+          }}>
+            Новое
+          </div>
+          {/* Text */}
+          <div style={{ position: 'absolute', bottom: 20, left: 18, right: 18 }}>
+            <p style={{ margin: '0 0 5px', fontSize: 19, fontWeight: 800, color: '#FFF', lineHeight: 1.2, letterSpacing: -0.3 }}>
+              Встречи с незнакомцами
+            </p>
+            <p style={{ margin: 0, fontSize: 12, color: 'rgba(255,255,255,0.82)', lineHeight: 1.4, fontWeight: 400 }}>
+              Ужины, бранчи и другие события от UPTOWN,<br/>на которых находят новых друзей
+            </p>
+          </div>
+          {/* Arrow */}
+          <div style={{ position: 'absolute', bottom: 20, right: 18 }}>
+            <div style={{ width: 32, height: 32, borderRadius: 16, backgroundColor: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M13 6l6 6-6 6" stroke="#FFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ── Подборки ── */}
       {!searchResult && !searchLoading && <div style={{ backgroundColor: '#FFF', marginTop: 8, padding: '18px 16px 20px' }}>
@@ -3356,6 +3402,7 @@ export default function UptownApp() {
                 searchLoading={searchLoading} setSearchLoading={setSearchLoading}
                 searchResult={searchResult} setSearchResult={setSearchResult}
                 likedSet={likedSet} toggleLike={toggleLike}
+                onTabChange={handleTabChange}
               />
             )}
             {screen === 'map' && (
