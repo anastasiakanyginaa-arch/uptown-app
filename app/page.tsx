@@ -268,6 +268,71 @@ function BottomTabBar({ activeTab, onTabChange }: { activeTab: Tab; onTabChange:
 
 // ─── Events Screen ────────────────────────────────────────────────────────────
 
+const EVENTS_CATS = [
+  { id: 'concerts', label: '🎵 Концерты' },
+  { id: 'parties', label: '🎉 Вечеринки' },
+  { id: 'festivals', label: '🎪 Фестивали' },
+  { id: 'exhibitions', label: '🖼 Выставки' },
+  { id: 'cinema', label: '🎬 Кино' },
+  { id: 'food', label: '🍳 Еда' },
+];
+
+const EVENTS_FILTERS = [
+  { id: 'today', label: 'Сегодня' },
+  { id: 'tomorrow', label: 'Завтра' },
+  { id: 'weekend', label: 'Выходные' },
+  { id: 'week', label: 'Неделя' },
+  { id: 'dates', label: '📅 Даты' },
+];
+
+const UPTOWN_PICKS = [
+  {
+    bg: 'linear-gradient(160deg,#061a0f,#0d3520,#1a5530)',
+    title: 'Jazz in the Dark',
+    venue: 'Loft Project ETAGI',
+    quote: '«Уютный джаз в темноте — наш фаворит этой осени»',
+    price: 'от 800 ₽',
+    date: '8 ноя',
+  },
+  {
+    bg: 'linear-gradient(160deg,#0d0618,#1a0a2e,#2a1050)',
+    title: 'Psycho Kinetics',
+    venue: 'Арт-кластер Яма',
+    quote: '«Опыт, который сложно описать словами»',
+    price: 'от 1 500 ₽',
+    date: '9 ноя',
+  },
+  {
+    bg: 'linear-gradient(160deg,#1a0a08,#3a1810,#5a2a18)',
+    title: 'Ночь Музыки',
+    venue: 'ЦДХ',
+    quote: '«Классика под открытым небом — не пропустите»',
+    price: 'от 600 ₽',
+    date: '10 ноя',
+  },
+];
+
+const TOP_EVENTS = [
+  { bg: 'linear-gradient(135deg,#1a0a2e,#4a1a60)', title: 'House Collective', sub: 'Mutabor · Пт 8 ноя', price: 'от 1 500 ₽', barColor: ACCENT },
+  { bg: 'linear-gradient(135deg,#0a1a2e,#1a4060)', title: 'Мариинка Open Air', sub: 'Парк Горького · Сб', price: 'от 2 500 ₽', barColor: 'rgba(195,231,136,.5)' },
+  { bg: 'linear-gradient(135deg,#1a1a0a,#403a10)', title: 'Indie Night Vol.4', sub: '16 Тонн · Пт 8 ноя', price: 'от 500 ₽', barColor: 'rgba(195,231,136,.28)' },
+  { bg: 'linear-gradient(135deg,#0d1a0d,#1a3a1a)', title: 'Oxxxymiron Live', sub: 'Олимпийский · Вс', price: 'от 3 500 ₽', barColor: 'rgba(195,231,136,.18)' },
+  { bg: 'linear-gradient(135deg,#2e1010,#501818)', title: 'Techno Basement', sub: 'Arma17 · Сб 9 ноя', price: 'от 800 ₽', barColor: 'rgba(195,231,136,.12)' },
+];
+
+const PARTY_EVENTS = [
+  { bg: 'linear-gradient(135deg,#1a1a2e,#2a2060)', title: 'R&B Night', venue: 'Мой двор', badge: 'вход своб.' },
+  { bg: 'linear-gradient(135deg,#2e1010,#501818)', title: 'Techno Basement', venue: 'Arma17', price: 'от 600 ₽' },
+  { bg: 'linear-gradient(135deg,#102010,#204020)', title: '90s Hits', venue: 'Icon', price: 'от 500 ₽' },
+  { bg: 'linear-gradient(135deg,#2e1a08,#5a3010)', title: 'Garage Session', venue: 'Fabrique', price: 'от 700 ₽' },
+];
+
+const FOR_YOU_EVENTS = [
+  { bg: 'linear-gradient(135deg,#2e1a08,#5a3010)', title: 'Oxxxymiron', venue: 'Олимпийский', price: 'от 3 500 ₽', badge: 'концерт' },
+  { bg: 'linear-gradient(135deg,#2e1010,#501818)', title: 'Deep House Set', venue: 'Arma17', price: 'от 800 ₽' },
+  { bg: 'linear-gradient(135deg,#1a1a2e,#2a2060)', title: 'Jazz Brunch', venue: 'Strelka', price: 'от 500 ₽' },
+];
+
 function EventsScreen({
   selectedCategories,
   setSelectedCategories,
@@ -277,187 +342,262 @@ function EventsScreen({
   setSelectedCategories: (cats: string[]) => void;
   onViewResults: () => void;
 }) {
-  const categories = [
-    { id: 'concerts', label: 'Concerts', Icon: MicIcon },
-    { id: 'food', label: 'Food events', Icon: FoodIcon },
-    { id: 'parties', label: 'Parties', Icon: PartyIcon },
-    { id: 'exhibitions', label: 'Exhibitions', Icon: ExhibitIcon },
-    { id: 'masterclasses', label: 'Master classes', Icon: PaletteIcon },
-    { id: 'screenings', label: 'Screenings', Icon: FilmIcon },
-  ];
+  const [activeCat, setActiveCat] = useState('concerts');
+  const [activeFilter, setActiveFilter] = useState('today');
+  const [heroIdx, setHeroIdx] = useState(0);
+  // simulate user having liked events
+  const hasLikes = true;
 
-  const toggle = (id: string) =>
-    setSelectedCategories(
-      selectedCategories.includes(id)
-        ? selectedCategories.filter((c) => c !== id)
-        : [...selectedCategories, id]
-    );
+  const pill = (label: string, color: string, bg: string, extra?: React.CSSProperties) => (
+    <div style={{
+      display: 'inline-flex', alignItems: 'center',
+      background: bg, color,
+      fontSize: 9, fontWeight: 800, padding: '3px 9px',
+      borderRadius: 20, letterSpacing: '.05em',
+      ...extra,
+    }}>{label}</div>
+  );
+
+  const gradOv = 'linear-gradient(to top,rgba(0,0,0,.78) 0%,rgba(0,0,0,.18) 50%,transparent 100%)';
 
   return (
-    <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
-      {/* Event hero banner */}
-      <div style={{
-        height: 270,
-        background: 'linear-gradient(180deg, #111 0%, #1E1E1E 50%, #2A2A2A 100%)',
-        position: 'relative',
-        overflow: 'hidden',
-        flexShrink: 0,
-      }}>
-        {/* City selector */}
-        <div style={{
-          position: 'absolute',
-          top: 10,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          zIndex: 10,
-          backgroundColor: 'rgba(0,0,0,0.5)',
-          borderRadius: 20,
-          padding: '5px 14px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: 5,
-          whiteSpace: 'nowrap',
-        }}>
-          <span style={{ color: '#FFF', fontSize: 14, fontWeight: 500 }}>Moscow</span>
-          <svg width="10" height="6" viewBox="0 0 10 6">
-            <path d="M1 1L5 5L9 1" stroke="#FFF" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
-        </div>
+    <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', background: '#fff' }}>
 
-        {/* Abstract silhouette */}
+      {/* ── HERO SLIDER ── */}
+      <div style={{ position: 'relative', height: 200, flexShrink: 0, overflow: 'hidden' }}>
         <div style={{
-          position: 'absolute',
-          top: 0, left: 0, right: 0, bottom: 60,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          overflow: 'hidden',
+          display: 'flex', height: '100%',
+          width: `${UPTOWN_PICKS.length * 100}%`,
+          transform: `translateX(-${heroIdx * (100 / UPTOWN_PICKS.length)}%)`,
+          transition: 'transform 0.35s ease',
         }}>
-          <svg width="260" height="200" viewBox="0 0 260 200" fill="none">
-            {/* Bunny ears */}
-            <ellipse cx="90" cy="60" rx="22" ry="55" fill="#0A0A0A" />
-            <ellipse cx="170" cy="60" rx="22" ry="55" fill="#0A0A0A" />
-            <ellipse cx="90" cy="65" rx="10" ry="35" fill="#1A1A1A" />
-            <ellipse cx="170" cy="65" rx="10" ry="35" fill="#1A1A1A" />
-            {/* Head */}
-            <ellipse cx="130" cy="130" rx="65" ry="60" fill="#111" />
-            {/* Eyes */}
-            <ellipse cx="108" cy="118" rx="10" ry="12" fill="#E8E8E8" />
-            <ellipse cx="152" cy="118" rx="10" ry="12" fill="#E8E8E8" />
-            <circle cx="111" cy="120" r="6" fill="#1A1A1A" />
-            <circle cx="155" cy="120" r="6" fill="#1A1A1A" />
-            {/* Bow tie */}
-            <path d="M110 165L130 155L150 165L130 175Z" fill="#2A2A2A" />
-            <circle cx="130" cy="165" r="4" fill="#3A3A3A" />
-            {/* Event text */}
-            <text x="130" y="100" textAnchor="middle" fill="#C3263A" fontSize="11" fontWeight="bold" letterSpacing="2">XTREME ×</text>
-            <text x="130" y="114" textAnchor="middle" fill="#C3263A" fontSize="11" fontWeight="bold" letterSpacing="2">DAILY SLIME</text>
-          </svg>
+          {UPTOWN_PICKS.map((ev, i) => (
+            <div key={i} style={{ width: `${100 / UPTOWN_PICKS.length}%`, flexShrink: 0, height: '100%', position: 'relative', background: ev.bg }}>
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.12) 60%,transparent 100%)' }} />
+              <div style={{ position: 'absolute', top: 14, left: 14 }}>
+                {pill('★ Выбор UPTOWN', ACCENT_DARK, ACCENT)}
+              </div>
+              <div style={{ position: 'absolute', bottom: 14, left: 14, right: 14 }}>
+                <div style={{ fontSize: 9, fontWeight: 700, color: ACCENT, letterSpacing: '.1em', textTransform: 'uppercase', marginBottom: 4 }}>
+                  {ev.venue}
+                </div>
+                <div style={{ fontFamily: 'var(--font-syne, sans-serif)', fontSize: 22, fontWeight: 800, color: '#fff', lineHeight: .97, letterSpacing: '-.02em', marginBottom: 8 }}>
+                  {ev.title}
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <span style={{ fontSize: 10, color: 'rgba(255,255,255,.55)' }}>{ev.date}</span>
+                  <div style={{ background: 'rgba(255,255,255,.12)', border: '1px solid rgba(255,255,255,.2)', borderRadius: 12, padding: '3px 10px', fontSize: 10, color: '#fff', fontWeight: 600 }}>
+                    {ev.price}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-
-        {/* Event info card */}
-        <div style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          background: 'rgba(25,25,25,0.88)',
-          padding: '10px 16px 12px',
-        }}>
-          <p style={{ color: '#FFF', fontSize: 14, fontWeight: 700, margin: 0, lineHeight: 1.35 }}>
-            XTREME × DAILY SLIME × DISCO CLUB at DK Kristall
-          </p>
-          <p style={{ color: '#AAAAAA', fontSize: 12, margin: '4px 0 2px' }}>From 10.04.26 to 11.04.26</p>
-          <p style={{ color: '#AAAAAA', fontSize: 12, margin: 0 }}>from 2000₽</p>
+        {/* dots */}
+        <div style={{ position: 'absolute', bottom: 50, left: 14, display: 'flex', gap: 4 }}>
+          {UPTOWN_PICKS.map((_, i) => (
+            <div key={i} onClick={() => setHeroIdx(i)} style={{
+              height: 2.5, borderRadius: 2,
+              width: i === heroIdx ? 22 : 14,
+              background: i === heroIdx ? '#fff' : 'rgba(255,255,255,.3)',
+              cursor: 'pointer', transition: 'width .25s',
+            }} />
+          ))}
         </div>
       </div>
 
-      {/* Venue label separator */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        padding: '8px 16px',
-        gap: 8,
-        borderBottom: '1px solid #F0F0F0',
-      }}>
-        <div style={{ flex: 1, height: 1, backgroundColor: '#E0E0E0' }} />
-        <span style={{ fontSize: 10, color: '#AAAAAA', letterSpacing: 2, textTransform: 'uppercase' }}>
-          Двор Кристалл
-        </span>
-        <div style={{ flex: 1, height: 1, backgroundColor: '#E0E0E0' }} />
+      {/* ── CATEGORY PILLS ── */}
+      <div style={{ background: '#fff', paddingTop: 10 }}>
+        <div style={{ display: 'flex', gap: 7, padding: '0 14px 10px', overflowX: 'auto', scrollbarWidth: 'none' }}>
+          {EVENTS_CATS.map(c => (
+            <button key={c.id} onClick={() => setActiveCat(c.id)} style={{
+              flexShrink: 0, padding: '7px 14px', borderRadius: 22,
+              fontSize: 11, fontWeight: 600,
+              border: activeCat === c.id ? 'none' : '1.2px solid #E0DEDB',
+              color: activeCat === c.id ? '#FFFEF4' : '#666',
+              background: activeCat === c.id ? '#262222' : '#fff',
+              cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'inherit',
+            }}>{c.label}</button>
+          ))}
+        </div>
       </div>
 
-      {/* Filter section */}
-      <div style={{ padding: '14px 16px 0' }}>
-        {/* Header row */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
-          <span style={{ fontSize: 16, fontWeight: 700, color: '#1A1A1A' }}>Where do you want to go?</span>
-          <div style={{ border: `1.5px solid ${ACCENT}`, borderRadius: 8, padding: '5px 10px' }}>
-            <span style={{ fontSize: 12, fontWeight: 500, color: '#1A1A1A' }}>10.04.2026</span>
+      {/* ── DATE FILTERS ── */}
+      <div style={{ background: '#fff', display: 'flex', gap: 6, padding: '0 14px 12px', overflowX: 'auto', scrollbarWidth: 'none' }}>
+        {EVENTS_FILTERS.map(f => (
+          <button key={f.id} onClick={() => setActiveFilter(f.id)} style={{
+            flexShrink: 0, padding: '5px 11px', borderRadius: 20,
+            fontSize: 10, fontWeight: 500,
+            border: activeFilter === f.id ? `1px solid ${ACCENT}` : '1px solid #E0DEDB',
+            color: activeFilter === f.id ? ACCENT_DARK : '#666',
+            background: activeFilter === f.id ? '#F4FCE9' : '#fff',
+            cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'inherit',
+          }}>{f.label}</button>
+        ))}
+      </div>
+
+      {/* ── ВЫБОР UPTOWN ── */}
+      <div style={{ background: '#fff', paddingBottom: 14, marginTop: 4 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: '0 14px', marginBottom: 12 }}>
+          <span style={{ fontFamily: 'var(--font-syne, sans-serif)', fontSize: 16, fontWeight: 800, color: '#1A1A1A', letterSpacing: '-.02em' }}>★ Выбор UPTOWN</span>
+          <span style={{ fontSize: 11, color: ACCENT_DARK, fontWeight: 600 }}>Все →</span>
+        </div>
+        <div style={{ display: 'flex', gap: 10, padding: '0 14px', overflowX: 'auto', scrollbarWidth: 'none' }}>
+          {UPTOWN_PICKS.map((ev, i) => (
+            <div key={i} style={{
+              flexShrink: 0, width: 160, height: 170,
+              borderRadius: 16, overflow: 'hidden', position: 'relative',
+              border: `1.5px solid ${ACCENT}`,
+              background: ev.bg,
+            }}>
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.2) 55%,transparent 100%)' }} />
+              <div style={{ position: 'absolute', top: 9, left: 9 }}>
+                {pill('★ Выбор UPTOWN', ACCENT_DARK, ACCENT)}
+              </div>
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '10px 11px' }}>
+                <div style={{ fontSize: 12, fontWeight: 800, color: '#fff', lineHeight: 1.2, marginBottom: 2 }}>{ev.title}</div>
+                <div style={{ fontSize: 10, color: 'rgba(255,255,255,.6)', marginBottom: 5 }}>{ev.venue}</div>
+                <div style={{ fontSize: 9.5, color: 'rgba(195,231,136,.9)', fontStyle: 'italic', lineHeight: 1.3, borderLeft: `2px solid ${ACCENT}`, paddingLeft: 5, marginBottom: 4 }}>
+                  {ev.quote}
+                </div>
+                <div style={{ fontSize: 9, color: 'rgba(255,255,255,.55)' }}>{ev.price} · {ev.date}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── ТОП НЕДЕЛИ ── */}
+      <div style={{ background: '#fff', paddingBottom: 14, marginTop: 4 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: '0 14px', marginBottom: 12 }}>
+          <span style={{ fontFamily: 'var(--font-syne, sans-serif)', fontSize: 16, fontWeight: 800, color: '#1A1A1A', letterSpacing: '-.02em' }}>🔥 Топ недели</span>
+          <span style={{ fontSize: 11, color: ACCENT_DARK, fontWeight: 600 }}>Всё →</span>
+        </div>
+        <div style={{ padding: '0 14px', display: 'flex', flexDirection: 'column', gap: 9 }}>
+          {TOP_EVENTS.map((ev, i) => (
+            <div key={i} style={{
+              borderRadius: 14, overflow: 'hidden', position: 'relative', height: 72,
+              background: ev.bg,
+            }}>
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right,rgba(0,0,0,.7) 0%,rgba(0,0,0,.18) 100%)' }} />
+              {/* left color bar */}
+              <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 3, background: ev.barColor }} />
+              {/* large number texture */}
+              <div style={{
+                position: 'absolute', right: -6, top: '50%', transform: 'translateY(-50%)',
+                fontFamily: 'var(--font-syne, sans-serif)', fontSize: 68, fontWeight: 800,
+                color: 'rgba(255,255,255,.07)', lineHeight: 1, pointerEvents: 'none', whiteSpace: 'nowrap',
+                letterSpacing: '-.04em',
+              }}>{String(i + 1).padStart(2, '0')}</div>
+              {/* small badge */}
+              <div style={{ position: 'absolute', top: 9, left: 12, fontFamily: 'var(--font-syne, sans-serif)', fontSize: 9, fontWeight: 800, color: 'rgba(255,255,255,.4)', letterSpacing: '.05em' }}>
+                #{String(i + 1).padStart(2, '0')}
+              </div>
+              {/* info */}
+              <div style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)' }}>
+                <div style={{ fontSize: 13, fontWeight: 800, color: '#fff', lineHeight: 1.2, marginBottom: 3 }}>{ev.title}</div>
+                <div style={{ fontSize: 9, color: 'rgba(255,255,255,.55)' }}>{ev.sub}</div>
+              </div>
+              {/* price */}
+              <div style={{
+                position: 'absolute', bottom: 9, right: 10,
+                background: 'rgba(195,231,136,.18)', border: '1px solid rgba(195,231,136,.4)',
+                borderRadius: 10, padding: '2px 8px', fontSize: 9, color: ACCENT, fontWeight: 700,
+              }}>{ev.price}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── ВЕЧЕРИНКИ ── */}
+      <div style={{ background: '#fff', paddingBottom: 14, marginTop: 4 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: '0 14px', marginBottom: 12 }}>
+          <span style={{ fontFamily: 'var(--font-syne, sans-serif)', fontSize: 16, fontWeight: 800, color: '#1A1A1A', letterSpacing: '-.02em' }}>🎉 Вечеринки</span>
+          <span style={{ fontSize: 11, color: ACCENT_DARK, fontWeight: 600 }}>Все →</span>
+        </div>
+        <div style={{ display: 'flex', gap: 10, padding: '0 14px', overflowX: 'auto', scrollbarWidth: 'none' }}>
+          {PARTY_EVENTS.map((ev, i) => (
+            <div key={i} style={{
+              flexShrink: 0, width: 130, height: 110,
+              borderRadius: 14, overflow: 'hidden', position: 'relative',
+              background: ev.bg,
+            }}>
+              <div style={{ position: 'absolute', inset: 0, background: gradOv }} />
+              {ev.badge && (
+                <div style={{ position: 'absolute', top: 9, left: 9, background: 'rgba(20,20,20,.65)', color: '#fff', fontSize: 9, fontWeight: 700, padding: '3px 8px', borderRadius: 20 }}>
+                  {ev.badge}
+                </div>
+              )}
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '10px 11px' }}>
+                <div style={{ fontSize: 12, fontWeight: 800, color: '#fff', lineHeight: 1.2, marginBottom: 2 }}>{ev.title}</div>
+                <div style={{ fontSize: 10, color: 'rgba(255,255,255,.65)' }}>{ev.venue}</div>
+                {ev.price && <div style={{ fontSize: 10, color: 'rgba(255,255,255,.75)', marginTop: 3, fontWeight: 500 }}>{ev.price}</div>}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── ДЛЯ ВАС ── */}
+      {hasLikes && (
+        <div style={{ background: '#fff', paddingBottom: 14, marginTop: 4 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: '0 14px', marginBottom: 4 }}>
+            <span style={{ fontFamily: 'var(--font-syne, sans-serif)', fontSize: 16, fontWeight: 800, color: '#1A1A1A', letterSpacing: '-.02em' }}>❤️ Для вас</span>
+            <span style={{ fontSize: 11, color: ACCENT_DARK, fontWeight: 600 }}>Все →</span>
+          </div>
+          <div style={{ fontSize: 10, color: '#aaa', fontStyle: 'italic', padding: '0 14px', marginBottom: 10 }}>На основе ваших лайков</div>
+          <div style={{ display: 'flex', gap: 10, padding: '0 14px', overflowX: 'auto', scrollbarWidth: 'none' }}>
+            {FOR_YOU_EVENTS.map((ev, i) => (
+              <div key={i} style={{
+                flexShrink: 0, width: 130, height: 110,
+                borderRadius: 14, overflow: 'hidden', position: 'relative',
+                background: ev.bg,
+              }}>
+                <div style={{ position: 'absolute', inset: 0, background: gradOv }} />
+                {ev.badge && (
+                  <div style={{ position: 'absolute', top: 9, left: 9, background: 'rgba(195,231,136,.85)', color: ACCENT_DARK, fontSize: 9, fontWeight: 700, padding: '3px 8px', borderRadius: 20 }}>
+                    {ev.badge}
+                  </div>
+                )}
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '10px 11px' }}>
+                  <div style={{ fontSize: 12, fontWeight: 800, color: '#fff', lineHeight: 1.2, marginBottom: 2 }}>{ev.title}</div>
+                  <div style={{ fontSize: 10, color: 'rgba(255,255,255,.65)' }}>{ev.venue}</div>
+                  {ev.price && <div style={{ fontSize: 10, color: 'rgba(255,255,255,.75)', marginTop: 3, fontWeight: 500 }}>{ev.price}</div>}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
+      )}
 
-        {/* Category grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginBottom: 14 }}>
-          {categories.map(({ id, label, Icon }) => {
-            const sel = selectedCategories.includes(id);
-            return (
-              <button key={id} onClick={() => toggle(id)} style={{
-                backgroundColor: sel ? ACCENT + '33' : '#F5F5F5',
-                border: `1.5px solid ${sel ? ACCENT : 'transparent'}`,
-                borderRadius: 12,
-                padding: '13px 6px 11px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: 7,
-                cursor: 'pointer',
-              }}>
-                <Icon color={sel ? ACCENT_DARK : '#888'} />
-                <span style={{ fontSize: 11, color: sel ? ACCENT_DARK : '#555', textAlign: 'center', lineHeight: 1.2 }}>
-                  {label}
-                </span>
-              </button>
-            );
-          })}
+      {/* ── БАННЕР ВСТРЕЧИ С НЕЗНАКОМЦАМИ ── */}
+      <div style={{ background: '#fff', padding: '4px 14px 24px' }}>
+        <div style={{
+          borderRadius: 18, overflow: 'hidden', height: 156, position: 'relative',
+        }}>
+          <img
+            src="/meetings-banner-bg.png"
+            alt=""
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+          />
+          <div style={{ position: 'absolute', top: 14, left: 14 }}>
+            {pill('НОВОЕ', '#FFFEF4', '#262222', { letterSpacing: '.1em' })}
+          </div>
+          <div style={{ position: 'absolute', bottom: 14, left: 14, right: 14 }}>
+            <div style={{ fontFamily: 'var(--font-syne, sans-serif)', fontSize: 18, fontWeight: 800, color: '#1A2A0A', lineHeight: 1, letterSpacing: '-.02em', marginBottom: 5 }}>
+              Встречи с<br />незнакомцами
+            </div>
+            <div style={{ fontSize: 10, color: 'rgba(26,42,10,.65)', lineHeight: 1.4 }}>
+              Ужины, бранчи и события UPTOWN,<br />на которых находят новых друзей
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* CTA buttons */}
-      <div style={{ padding: '10px 16px 16px', display: 'flex', gap: 10 }}>
-        <button onClick={() => setSelectedCategories([])} style={{
-          flex: 1,
-          height: 52,
-          backgroundColor: '#EFEFEF',
-          border: 'none',
-          borderRadius: 14,
-          fontSize: 15,
-          fontWeight: 600,
-          color: '#1A1A1A',
-          cursor: 'pointer',
-          fontFamily: 'inherit',
-        }}>
-          Reset
-        </button>
-        <button onClick={onViewResults} style={{
-          flex: 2,
-          height: 52,
-          backgroundColor: ACCENT,
-          border: 'none',
-          borderRadius: 14,
-          fontSize: 15,
-          fontWeight: 700,
-          color: ACCENT_DARK,
-          cursor: 'pointer',
-          fontFamily: 'inherit',
-        }}>
-          40 options
-        </button>
-      </div>
     </div>
   );
 }
-
 // ─── Venue Detail Screen ──────────────────────────────────────────────────────
 
 function VenueScreen({ onBack, placeIdx, likedSlot }: {
