@@ -287,7 +287,7 @@ const EVENTS_FILTERS = [
 
 const UPTOWN_PICKS = [
   {
-    bg: 'linear-gradient(160deg,#061a0f,#0d3520,#1a5530)',
+    img: 'https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=600&q=80',
     title: 'Jazz in the Dark',
     venue: 'Loft Project ETAGI',
     quote: '«Уютный джаз в темноте — наш фаворит этой осени»',
@@ -295,7 +295,7 @@ const UPTOWN_PICKS = [
     date: '8 ноя',
   },
   {
-    bg: 'linear-gradient(160deg,#0d0618,#1a0a2e,#2a1050)',
+    img: 'https://images.unsplash.com/photo-1536924940846-227afb31e2a5?w=600&q=80',
     title: 'Psycho Kinetics',
     venue: 'Арт-кластер Яма',
     quote: '«Опыт, который сложно описать словами»',
@@ -303,7 +303,7 @@ const UPTOWN_PICKS = [
     date: '9 ноя',
   },
   {
-    bg: 'linear-gradient(160deg,#1a0a08,#3a1810,#5a2a18)',
+    img: 'https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=600&q=80',
     title: 'Ночь Музыки',
     venue: 'ЦДХ',
     quote: '«Классика под открытым небом — не пропустите»',
@@ -313,24 +313,24 @@ const UPTOWN_PICKS = [
 ];
 
 const TOP_EVENTS = [
-  { bg: 'linear-gradient(135deg,#1a0a2e,#4a1a60)', title: 'House Collective', sub: 'Mutabor · Пт 8 ноя', price: 'от 1 500 ₽', barColor: ACCENT },
-  { bg: 'linear-gradient(135deg,#0a1a2e,#1a4060)', title: 'Мариинка Open Air', sub: 'Парк Горького · Сб', price: 'от 2 500 ₽', barColor: 'rgba(195,231,136,.5)' },
-  { bg: 'linear-gradient(135deg,#1a1a0a,#403a10)', title: 'Indie Night Vol.4', sub: '16 Тонн · Пт 8 ноя', price: 'от 500 ₽', barColor: 'rgba(195,231,136,.28)' },
-  { bg: 'linear-gradient(135deg,#0d1a0d,#1a3a1a)', title: 'Oxxxymiron Live', sub: 'Олимпийский · Вс', price: 'от 3 500 ₽', barColor: 'rgba(195,231,136,.18)' },
-  { bg: 'linear-gradient(135deg,#2e1010,#501818)', title: 'Techno Basement', sub: 'Arma17 · Сб 9 ноя', price: 'от 800 ₽', barColor: 'rgba(195,231,136,.12)' },
+  { img: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&q=80', title: 'House Collective', sub: 'Mutabor · Пт 8 ноя', price: 'от 1 500 ₽' },
+  { img: 'https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=600&q=80', title: 'Мариинка Open Air', sub: 'Парк Горького · Сб', price: 'от 2 500 ₽' },
+  { img: 'https://images.unsplash.com/photo-1501612780327-45045538702b?w=600&q=80', title: 'Indie Night Vol.4', sub: '16 Тонн · Пт 8 ноя', price: 'от 500 ₽' },
+  { img: 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=600&q=80', title: 'Oxxxymiron Live', sub: 'Олимпийский · Вс', price: 'от 3 500 ₽' },
+  { img: 'https://images.unsplash.com/photo-1571266028243-d220c6a5ca23?w=600&q=80', title: 'Techno Basement', sub: 'Arma17 · Сб 9 ноя', price: 'от 800 ₽' },
 ];
 
 const PARTY_EVENTS = [
-  { bg: 'linear-gradient(135deg,#1a1a2e,#2a2060)', title: 'R&B Night', venue: 'Мой двор', badge: 'вход своб.' },
-  { bg: 'linear-gradient(135deg,#2e1010,#501818)', title: 'Techno Basement', venue: 'Arma17', price: 'от 600 ₽' },
-  { bg: 'linear-gradient(135deg,#102010,#204020)', title: '90s Hits', venue: 'Icon', price: 'от 500 ₽' },
-  { bg: 'linear-gradient(135deg,#2e1a08,#5a3010)', title: 'Garage Session', venue: 'Fabrique', price: 'от 700 ₽' },
+  { img: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80', title: 'R&B Night', venue: 'Мой двор', badge: 'вход своб.' },
+  { img: 'https://images.unsplash.com/photo-1571266028243-d220c6a5ca23?w=400&q=80', title: 'Techno Basement', venue: 'Arma17', price: 'от 600 ₽' },
+  { img: 'https://images.unsplash.com/photo-1485579149621-3123dd979885?w=400&q=80', title: '90s Hits', venue: 'Icon', price: 'от 500 ₽' },
+  { img: 'https://images.unsplash.com/photo-1521334726093-b53c20c6a3fb?w=400&q=80', title: 'Garage Session', venue: 'Fabrique', price: 'от 700 ₽' },
 ];
 
 const FOR_YOU_EVENTS = [
-  { bg: 'linear-gradient(135deg,#2e1a08,#5a3010)', title: 'Oxxxymiron', venue: 'Олимпийский', price: 'от 3 500 ₽', badge: 'концерт' },
-  { bg: 'linear-gradient(135deg,#2e1010,#501818)', title: 'Deep House Set', venue: 'Arma17', price: 'от 800 ₽' },
-  { bg: 'linear-gradient(135deg,#1a1a2e,#2a2060)', title: 'Jazz Brunch', venue: 'Strelka', price: 'от 500 ₽' },
+  { img: 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=400&q=80', title: 'Oxxxymiron', venue: 'Олимпийский', price: 'от 3 500 ₽', badge: 'концерт' },
+  { img: 'https://images.unsplash.com/photo-1571266028243-d220c6a5ca23?w=400&q=80', title: 'Deep House Set', venue: 'Arma17', price: 'от 800 ₽' },
+  { img: 'https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=400&q=80', title: 'Jazz Brunch', venue: 'Strelka', price: 'от 500 ₽' },
 ];
 
 function EventsScreen({
@@ -345,26 +345,15 @@ function EventsScreen({
   const [activeCat, setActiveCat] = useState('concerts');
   const [activeFilter, setActiveFilter] = useState('today');
   const [heroIdx, setHeroIdx] = useState(0);
-  // simulate user having liked events
   const hasLikes = true;
 
-  const pill = (label: string, color: string, bg: string, extra?: React.CSSProperties) => (
-    <div style={{
-      display: 'inline-flex', alignItems: 'center',
-      background: bg, color,
-      fontSize: 9, fontWeight: 800, padding: '3px 9px',
-      borderRadius: 20, letterSpacing: '.05em',
-      ...extra,
-    }}>{label}</div>
-  );
-
-  const gradOv = 'linear-gradient(to top,rgba(0,0,0,.78) 0%,rgba(0,0,0,.18) 50%,transparent 100%)';
+  const gradOv = 'linear-gradient(to top,rgba(0,0,0,.72) 0%,rgba(0,0,0,.18) 55%,transparent 100%)';
 
   return (
     <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', background: '#fff' }}>
 
-      {/* ── HERO SLIDER ── */}
-      <div style={{ position: 'relative', height: 200, flexShrink: 0, overflow: 'hidden' }}>
+      {/* ── HERO SLIDER — высокий, 1/3 экрана ── */}
+      <div style={{ position: 'relative', height: 280, flexShrink: 0, overflow: 'hidden' }}>
         <div style={{
           display: 'flex', height: '100%',
           width: `${UPTOWN_PICKS.length * 100}%`,
@@ -372,21 +361,35 @@ function EventsScreen({
           transition: 'transform 0.35s ease',
         }}>
           {UPTOWN_PICKS.map((ev, i) => (
-            <div key={i} style={{ width: `${100 / UPTOWN_PICKS.length}%`, flexShrink: 0, height: '100%', position: 'relative', background: ev.bg }}>
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.12) 60%,transparent 100%)' }} />
-              <div style={{ position: 'absolute', top: 14, left: 14 }}>
-                {pill('★ Выбор UPTOWN', ACCENT_DARK, ACCENT)}
+            <div key={i} style={{ width: `${100 / UPTOWN_PICKS.length}%`, flexShrink: 0, height: '100%', position: 'relative' }}>
+              <img src={ev.img} alt={ev.title} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.3) 50%,rgba(0,0,0,.05) 100%)' }} />
+              {/* tag top-left */}
+              <div style={{ position: 'absolute', top: 14, left: 14, background: ACCENT, color: ACCENT_DARK, fontSize: 9, fontWeight: 800, padding: '3px 10px', borderRadius: 20, letterSpacing: '.06em' }}>
+                ★ Выбор UPTOWN
               </div>
+              {/* bottom info */}
               <div style={{ position: 'absolute', bottom: 14, left: 14, right: 14 }}>
-                <div style={{ fontSize: 9, fontWeight: 700, color: ACCENT, letterSpacing: '.1em', textTransform: 'uppercase', marginBottom: 4 }}>
+                {/* dots above title */}
+                <div style={{ display: 'flex', gap: 4, marginBottom: 10 }}>
+                  {UPTOWN_PICKS.map((_, di) => (
+                    <div key={di} onClick={() => setHeroIdx(di)} style={{
+                      height: 2.5, borderRadius: 2,
+                      width: di === heroIdx ? 22 : 14,
+                      background: di === heroIdx ? '#fff' : 'rgba(255,255,255,.35)',
+                      cursor: 'pointer', transition: 'width .25s',
+                    }} />
+                  ))}
+                </div>
+                <div style={{ fontSize: 9, fontWeight: 700, color: ACCENT, letterSpacing: '.1em', textTransform: 'uppercase', marginBottom: 5 }}>
                   {ev.venue}
                 </div>
-                <div style={{ fontFamily: 'var(--font-syne, sans-serif)', fontSize: 22, fontWeight: 800, color: '#fff', lineHeight: .97, letterSpacing: '-.02em', marginBottom: 8 }}>
+                <div style={{ fontFamily: 'var(--font-syne, sans-serif)', fontSize: 24, fontWeight: 800, color: '#fff', lineHeight: .95, letterSpacing: '-.02em', marginBottom: 10 }}>
                   {ev.title}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <span style={{ fontSize: 10, color: 'rgba(255,255,255,.55)' }}>{ev.date}</span>
-                  <div style={{ background: 'rgba(255,255,255,.12)', border: '1px solid rgba(255,255,255,.2)', borderRadius: 12, padding: '3px 10px', fontSize: 10, color: '#fff', fontWeight: 600 }}>
+                  <span style={{ fontSize: 11, color: 'rgba(255,255,255,.55)' }}>{ev.date}</span>
+                  <div style={{ background: 'rgba(255,255,255,.12)', border: '1px solid rgba(255,255,255,.2)', borderRadius: 12, padding: '4px 12px', fontSize: 11, color: '#fff', fontWeight: 600 }}>
                     {ev.price}
                   </div>
                 </div>
@@ -394,28 +397,17 @@ function EventsScreen({
             </div>
           ))}
         </div>
-        {/* dots */}
-        <div style={{ position: 'absolute', bottom: 50, left: 14, display: 'flex', gap: 4 }}>
-          {UPTOWN_PICKS.map((_, i) => (
-            <div key={i} onClick={() => setHeroIdx(i)} style={{
-              height: 2.5, borderRadius: 2,
-              width: i === heroIdx ? 22 : 14,
-              background: i === heroIdx ? '#fff' : 'rgba(255,255,255,.3)',
-              cursor: 'pointer', transition: 'width .25s',
-            }} />
-          ))}
-        </div>
       </div>
 
       {/* ── CATEGORY PILLS ── */}
-      <div style={{ background: '#fff', paddingTop: 10 }}>
-        <div style={{ display: 'flex', gap: 7, padding: '0 14px 10px', overflowX: 'auto', scrollbarWidth: 'none' }}>
+      <div style={{ background: '#fff', paddingTop: 12 }}>
+        <div style={{ display: 'flex', gap: 8, padding: '0 14px 12px', overflowX: 'auto', scrollbarWidth: 'none' }}>
           {EVENTS_CATS.map(c => (
             <button key={c.id} onClick={() => setActiveCat(c.id)} style={{
-              flexShrink: 0, padding: '7px 14px', borderRadius: 22,
-              fontSize: 11, fontWeight: 600,
+              flexShrink: 0, padding: '9px 16px', borderRadius: 24,
+              fontSize: 12, fontWeight: 600,
               border: activeCat === c.id ? 'none' : '1.2px solid #E0DEDB',
-              color: activeCat === c.id ? '#FFFEF4' : '#666',
+              color: activeCat === c.id ? '#FFFEF4' : '#555',
               background: activeCat === c.id ? '#262222' : '#fff',
               cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'inherit',
             }}>{c.label}</button>
@@ -423,14 +415,14 @@ function EventsScreen({
         </div>
       </div>
 
-      {/* ── DATE FILTERS ── */}
-      <div style={{ background: '#fff', display: 'flex', gap: 6, padding: '0 14px 12px', overflowX: 'auto', scrollbarWidth: 'none' }}>
+      {/* ── DATE FILTERS — покрупнее ── */}
+      <div style={{ background: '#fff', display: 'flex', gap: 8, padding: '0 14px 14px', overflowX: 'auto', scrollbarWidth: 'none' }}>
         {EVENTS_FILTERS.map(f => (
           <button key={f.id} onClick={() => setActiveFilter(f.id)} style={{
-            flexShrink: 0, padding: '5px 11px', borderRadius: 20,
-            fontSize: 10, fontWeight: 500,
-            border: activeFilter === f.id ? `1px solid ${ACCENT}` : '1px solid #E0DEDB',
-            color: activeFilter === f.id ? ACCENT_DARK : '#666',
+            flexShrink: 0, padding: '9px 16px', borderRadius: 24,
+            fontSize: 12, fontWeight: 600,
+            border: activeFilter === f.id ? `1.5px solid ${ACCENT}` : '1.5px solid #E0DEDB',
+            color: activeFilter === f.id ? ACCENT_DARK : '#555',
             background: activeFilter === f.id ? '#F4FCE9' : '#fff',
             cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'inherit',
           }}>{f.label}</button>
@@ -438,7 +430,7 @@ function EventsScreen({
       </div>
 
       {/* ── ВЫБОР UPTOWN ── */}
-      <div style={{ background: '#fff', paddingBottom: 14, marginTop: 4 }}>
+      <div style={{ background: '#fff', paddingBottom: 14, marginTop: 2 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: '0 14px', marginBottom: 12 }}>
           <span style={{ fontFamily: 'var(--font-syne, sans-serif)', fontSize: 16, fontWeight: 800, color: '#1A1A1A', letterSpacing: '-.02em' }}>★ Выбор UPTOWN</span>
           <span style={{ fontSize: 11, color: ACCENT_DARK, fontWeight: 600 }}>Все →</span>
@@ -446,14 +438,14 @@ function EventsScreen({
         <div style={{ display: 'flex', gap: 10, padding: '0 14px', overflowX: 'auto', scrollbarWidth: 'none' }}>
           {UPTOWN_PICKS.map((ev, i) => (
             <div key={i} style={{
-              flexShrink: 0, width: 160, height: 170,
+              flexShrink: 0, width: 165, height: 175,
               borderRadius: 16, overflow: 'hidden', position: 'relative',
               border: `1.5px solid ${ACCENT}`,
-              background: ev.bg,
             }}>
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.2) 55%,transparent 100%)' }} />
-              <div style={{ position: 'absolute', top: 9, left: 9 }}>
-                {pill('★ Выбор UPTOWN', ACCENT_DARK, ACCENT)}
+              <img src={ev.img} alt={ev.title} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.25) 55%,transparent 100%)' }} />
+              <div style={{ position: 'absolute', top: 9, left: 9, background: ACCENT, color: ACCENT_DARK, fontSize: 8, fontWeight: 800, padding: '2px 8px', borderRadius: 20 }}>
+                ★ Выбор UPTOWN
               </div>
               <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '10px 11px' }}>
                 <div style={{ fontSize: 12, fontWeight: 800, color: '#fff', lineHeight: 1.2, marginBottom: 2 }}>{ev.title}</div>
@@ -468,42 +460,41 @@ function EventsScreen({
         </div>
       </div>
 
-      {/* ── ТОП НЕДЕЛИ ── */}
-      <div style={{ background: '#fff', paddingBottom: 14, marginTop: 4 }}>
+      {/* ── ТОП НЕДЕЛИ — с реальными фото ── */}
+      <div style={{ background: '#fff', paddingBottom: 14, marginTop: 2 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: '0 14px', marginBottom: 12 }}>
           <span style={{ fontFamily: 'var(--font-syne, sans-serif)', fontSize: 16, fontWeight: 800, color: '#1A1A1A', letterSpacing: '-.02em' }}>🔥 Топ недели</span>
           <span style={{ fontSize: 11, color: ACCENT_DARK, fontWeight: 600 }}>Всё →</span>
         </div>
-        <div style={{ padding: '0 14px', display: 'flex', flexDirection: 'column', gap: 9 }}>
+        <div style={{ padding: '0 14px', display: 'flex', flexDirection: 'column', gap: 10 }}>
           {TOP_EVENTS.map((ev, i) => (
-            <div key={i} style={{
-              borderRadius: 14, overflow: 'hidden', position: 'relative', height: 72,
-              background: ev.bg,
-            }}>
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right,rgba(0,0,0,.7) 0%,rgba(0,0,0,.18) 100%)' }} />
-              {/* left color bar */}
-              <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 3, background: ev.barColor }} />
-              {/* large number texture */}
+            <div key={i} style={{ borderRadius: 16, overflow: 'hidden', position: 'relative', height: 80 }}>
+              <img src={ev.img} alt={ev.title} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right,rgba(0,0,0,.78) 0%,rgba(0,0,0,.25) 65%,transparent 100%)' }} />
+              {/* left accent bar */}
+              <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 3, background: i === 0 ? ACCENT : i === 1 ? 'rgba(195,231,136,.6)' : 'rgba(195,231,136,.3)' }} />
+              {/* large rank texture */}
               <div style={{
-                position: 'absolute', right: -6, top: '50%', transform: 'translateY(-50%)',
-                fontFamily: 'var(--font-syne, sans-serif)', fontSize: 68, fontWeight: 800,
-                color: 'rgba(255,255,255,.07)', lineHeight: 1, pointerEvents: 'none', whiteSpace: 'nowrap',
+                position: 'absolute', right: -4, top: '50%', transform: 'translateY(-50%)',
+                fontFamily: 'var(--font-syne, sans-serif)', fontSize: 72, fontWeight: 800,
+                color: 'rgba(255,255,255,.12)', lineHeight: 1, pointerEvents: 'none', whiteSpace: 'nowrap',
                 letterSpacing: '-.04em',
               }}>{String(i + 1).padStart(2, '0')}</div>
-              {/* small badge */}
-              <div style={{ position: 'absolute', top: 9, left: 12, fontFamily: 'var(--font-syne, sans-serif)', fontSize: 9, fontWeight: 800, color: 'rgba(255,255,255,.4)', letterSpacing: '.05em' }}>
+              {/* rank badge */}
+              <div style={{ position: 'absolute', top: 10, left: 12, fontFamily: 'var(--font-syne, sans-serif)', fontSize: 9, fontWeight: 800, color: 'rgba(255,255,255,.5)', letterSpacing: '.05em' }}>
                 #{String(i + 1).padStart(2, '0')}
               </div>
               {/* info */}
               <div style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)' }}>
-                <div style={{ fontSize: 13, fontWeight: 800, color: '#fff', lineHeight: 1.2, marginBottom: 3 }}>{ev.title}</div>
-                <div style={{ fontSize: 9, color: 'rgba(255,255,255,.55)' }}>{ev.sub}</div>
+                <div style={{ fontSize: 14, fontWeight: 800, color: '#fff', lineHeight: 1.2, marginBottom: 3 }}>{ev.title}</div>
+                <div style={{ fontSize: 10, color: 'rgba(255,255,255,.6)' }}>{ev.sub}</div>
               </div>
               {/* price */}
               <div style={{
-                position: 'absolute', bottom: 9, right: 10,
-                background: 'rgba(195,231,136,.18)', border: '1px solid rgba(195,231,136,.4)',
-                borderRadius: 10, padding: '2px 8px', fontSize: 9, color: ACCENT, fontWeight: 700,
+                position: 'absolute', bottom: 10, right: 12,
+                background: 'rgba(0,0,0,.35)', backdropFilter: 'blur(4px)',
+                border: '1px solid rgba(195,231,136,.4)',
+                borderRadius: 10, padding: '3px 10px', fontSize: 10, color: ACCENT, fontWeight: 700,
               }}>{ev.price}</div>
             </div>
           ))}
@@ -511,18 +502,15 @@ function EventsScreen({
       </div>
 
       {/* ── ВЕЧЕРИНКИ ── */}
-      <div style={{ background: '#fff', paddingBottom: 14, marginTop: 4 }}>
+      <div style={{ background: '#fff', paddingBottom: 14, marginTop: 2 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: '0 14px', marginBottom: 12 }}>
           <span style={{ fontFamily: 'var(--font-syne, sans-serif)', fontSize: 16, fontWeight: 800, color: '#1A1A1A', letterSpacing: '-.02em' }}>🎉 Вечеринки</span>
           <span style={{ fontSize: 11, color: ACCENT_DARK, fontWeight: 600 }}>Все →</span>
         </div>
         <div style={{ display: 'flex', gap: 10, padding: '0 14px', overflowX: 'auto', scrollbarWidth: 'none' }}>
           {PARTY_EVENTS.map((ev, i) => (
-            <div key={i} style={{
-              flexShrink: 0, width: 130, height: 110,
-              borderRadius: 14, overflow: 'hidden', position: 'relative',
-              background: ev.bg,
-            }}>
+            <div key={i} style={{ flexShrink: 0, width: 135, height: 115, borderRadius: 14, overflow: 'hidden', position: 'relative' }}>
+              <img src={ev.img} alt={ev.title} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
               <div style={{ position: 'absolute', inset: 0, background: gradOv }} />
               {ev.badge && (
                 <div style={{ position: 'absolute', top: 9, left: 9, background: 'rgba(20,20,20,.65)', color: '#fff', fontSize: 9, fontWeight: 700, padding: '3px 8px', borderRadius: 20 }}>
@@ -541,7 +529,7 @@ function EventsScreen({
 
       {/* ── ДЛЯ ВАС ── */}
       {hasLikes && (
-        <div style={{ background: '#fff', paddingBottom: 14, marginTop: 4 }}>
+        <div style={{ background: '#fff', paddingBottom: 14, marginTop: 2 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: '0 14px', marginBottom: 4 }}>
             <span style={{ fontFamily: 'var(--font-syne, sans-serif)', fontSize: 16, fontWeight: 800, color: '#1A1A1A', letterSpacing: '-.02em' }}>❤️ Для вас</span>
             <span style={{ fontSize: 11, color: ACCENT_DARK, fontWeight: 600 }}>Все →</span>
@@ -549,11 +537,8 @@ function EventsScreen({
           <div style={{ fontSize: 10, color: '#aaa', fontStyle: 'italic', padding: '0 14px', marginBottom: 10 }}>На основе ваших лайков</div>
           <div style={{ display: 'flex', gap: 10, padding: '0 14px', overflowX: 'auto', scrollbarWidth: 'none' }}>
             {FOR_YOU_EVENTS.map((ev, i) => (
-              <div key={i} style={{
-                flexShrink: 0, width: 130, height: 110,
-                borderRadius: 14, overflow: 'hidden', position: 'relative',
-                background: ev.bg,
-              }}>
+              <div key={i} style={{ flexShrink: 0, width: 135, height: 115, borderRadius: 14, overflow: 'hidden', position: 'relative' }}>
+                <img src={ev.img} alt={ev.title} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
                 <div style={{ position: 'absolute', inset: 0, background: gradOv }} />
                 {ev.badge && (
                   <div style={{ position: 'absolute', top: 9, left: 9, background: 'rgba(195,231,136,.85)', color: ACCENT_DARK, fontSize: 9, fontWeight: 700, padding: '3px 8px', borderRadius: 20 }}>
@@ -573,16 +558,14 @@ function EventsScreen({
 
       {/* ── БАННЕР ВСТРЕЧИ С НЕЗНАКОМЦАМИ ── */}
       <div style={{ background: '#fff', padding: '4px 14px 24px' }}>
-        <div style={{
-          borderRadius: 18, overflow: 'hidden', height: 156, position: 'relative',
-        }}>
+        <div style={{ borderRadius: 18, overflow: 'hidden', height: 156, position: 'relative' }}>
           <img
             src="/meetings-banner-bg.png"
             alt=""
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
           />
-          <div style={{ position: 'absolute', top: 14, left: 14 }}>
-            {pill('НОВОЕ', '#FFFEF4', '#262222', { letterSpacing: '.1em' })}
+          <div style={{ position: 'absolute', top: 14, left: 14, background: '#262222', color: '#FFFEF4', fontSize: 9, fontWeight: 800, padding: '4px 12px', borderRadius: 20, letterSpacing: '.1em' }}>
+            НОВОЕ
           </div>
           <div style={{ position: 'absolute', bottom: 14, left: 14, right: 14 }}>
             <div style={{ fontFamily: 'var(--font-syne, sans-serif)', fontSize: 18, fontWeight: 800, color: '#1A2A0A', lineHeight: 1, letterSpacing: '-.02em', marginBottom: 5 }}>
