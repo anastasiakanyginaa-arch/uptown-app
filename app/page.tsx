@@ -329,7 +329,7 @@ const PARTY_EVENTS = [
 
 const FOR_YOU_EVENTS = [
   { img: 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=400&q=80', title: 'Oxxxymiron', venue: 'Олимпийский', price: 'от 3 500 ₽', badge: 'концерт' },
-  { img: 'https://images.unsplash.com/photo-1571266028243-d220c6a5ca23?w=400&q=80', title: 'Deep House Set', venue: 'Arma17', price: 'от 800 ₽' },
+  { img: 'https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=400&q=80', title: 'Deep House Set', venue: 'Arma17', price: 'от 800 ₽' },
   { img: 'https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=400&q=80', title: 'Jazz Brunch', venue: 'Strelka', price: 'от 500 ₽' },
 ];
 
@@ -400,11 +400,11 @@ function EventsScreen({
       </div>
 
       {/* ── CATEGORY PILLS ── */}
-      <div style={{ background: '#fff', paddingTop: 12 }}>
-        <div style={{ display: 'flex', gap: 8, padding: '0 14px 12px', overflowX: 'auto', scrollbarWidth: 'none' }}>
+      <div style={{ background: '#fff', paddingTop: 12, overflowX: 'auto', overflowY: 'visible' }}>
+        <div style={{ display: 'flex', gap: 8, padding: '0 14px 12px', width: 'max-content' }}>
           {EVENTS_CATS.map(c => (
             <button key={c.id} onClick={() => setActiveCat(c.id)} style={{
-              flexShrink: 0, padding: '9px 16px', borderRadius: 24,
+              padding: '9px 16px', borderRadius: 24,
               fontSize: 12, fontWeight: 600,
               border: activeCat === c.id ? 'none' : '1.2px solid #E0DEDB',
               color: activeCat === c.id ? '#FFFEF4' : '#555',
@@ -415,18 +415,20 @@ function EventsScreen({
         </div>
       </div>
 
-      {/* ── DATE FILTERS — покрупнее ── */}
-      <div style={{ background: '#fff', display: 'flex', gap: 8, padding: '0 14px 14px', overflowX: 'auto', scrollbarWidth: 'none' }}>
-        {EVENTS_FILTERS.map(f => (
-          <button key={f.id} onClick={() => setActiveFilter(f.id)} style={{
-            flexShrink: 0, padding: '9px 16px', borderRadius: 24,
-            fontSize: 12, fontWeight: 600,
-            border: activeFilter === f.id ? `1.5px solid ${ACCENT}` : '1.5px solid #E0DEDB',
-            color: activeFilter === f.id ? ACCENT_DARK : '#555',
-            background: activeFilter === f.id ? '#F4FCE9' : '#fff',
-            cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'inherit',
-          }}>{f.label}</button>
-        ))}
+      {/* ── DATE FILTERS ── */}
+      <div style={{ background: '#fff', overflowX: 'auto', overflowY: 'visible' }}>
+        <div style={{ display: 'flex', gap: 8, padding: '0 14px 14px', width: 'max-content' }}>
+          {EVENTS_FILTERS.map(f => (
+            <button key={f.id} onClick={() => setActiveFilter(f.id)} style={{
+              padding: '9px 16px', borderRadius: 24,
+              fontSize: 12, fontWeight: 600,
+              border: activeFilter === f.id ? `1.5px solid ${ACCENT}` : '1.5px solid #E0DEDB',
+              color: activeFilter === f.id ? ACCENT_DARK : '#555',
+              background: activeFilter === f.id ? '#F4FCE9' : '#fff',
+              cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'inherit',
+            }}>{f.label}</button>
+          ))}
+        </div>
       </div>
 
       {/* ── ВЫБОР UPTOWN ── */}
